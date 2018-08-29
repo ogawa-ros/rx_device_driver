@@ -1,16 +1,16 @@
 <launch>
-  <node pkg="rx-device-driver" name="lakeshore_218" type="l218_temp_monitor.py" required="true">
-    <!-- <remap from="l218" to="l218_1" /> -->
+  <node pkg="rx-device-driver" name="lakeshore_218" type="l218_temp_monitor.py" required="true" output="screen">
     <param name="~host" value="192.168.100.106" />
     <param name="~port" value="1" />
     <param name="~rate" value="1" />
-    <param name='~topic_name1' value='['lakeshore218_ch1', 1]'>
-    <param name='~topic_name2' value='['lakeshore218_ch2', 1]'>
-    <param name='~topic_name3' value='['lakeshore218_ch3', 1]'>
-    <param name='~topic_name4' value='['lakeshore218_ch4', 1]'>
-    <param name='~topic_name5' value='['lakeshore218_ch5', 1]'>
-    <param name='~topic_name6' value='['lakeshore218_ch6', 1]'>
-    <param name='~topic_name7' value='['lakeshore218_ch7', 1]'>
-    <param name='~topic_name8' value='['lakeshore218_ch8', 1]'>
+    <param name="~hoge" value="[1,2,3,4]" />
+    <param name="~topic_name1" value="[lakeshore218_ch1, 1]" />
+    <param name="~topic_name2" value="[lakeshore218_ch2, 0]" />
+    <param name="~topic_name3" value="[lakeshore218_ch3, 1]" />
+    <param name="~topic_name4" value="[lakeshore218_ch4, 0]" />
+    <param name="~topic_name5" value="[lakeshore218_ch5, 0]" />
+    <param name="~topic_name6" value="[lakeshore218_ch6, 1]" />
+    <param name="~topic_name7" value="[lakeshore218_ch7, 0]" />
+    <param name="~topic_name8" value="[lakeshore218_ch8, 0]" />
   </node>
 </launch>
