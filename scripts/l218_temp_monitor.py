@@ -46,8 +46,9 @@ if __name__ == '__main__':
     host = rospy.get_param('~host')
     port = rospy.get_param('~port')
     rate = rospy.get_param('~rate')
-    hoge = rospy.get_param('~hoge')
-    
+
+    topic_list = [str2list(rospy.get_param('~topic_name{}'.format(i+1))) for i in range(8)]
+    '''
     topic_name1 = str2list(rospy.get_param('~topic_name1'))
     topic_name2 = str2list(rospy.get_param('~topic_name2'))
     topic_name3 = str2list(rospy.get_param('~topic_name3'))
@@ -56,6 +57,7 @@ if __name__ == '__main__':
     topic_name6 = str2list(rospy.get_param('~topic_name6'))
     topic_name7 = str2list(rospy.get_param('~topic_name7'))
     topic_name8 = str2list(rospy.get_param('~topic_name8'))
+    '''
 
     try:
         temp = lakeshore218_driver(host, port)
@@ -63,6 +65,8 @@ if __name__ == '__main__':
         rospy.logerr("{e.strerror}. host={host}".format(**locals()))
         sys.exit()
 
+    pub_list = [rospy.Publisher(i[0], Float64, queue_size=1) for i in topic_list]
+    '''
     pub1 = rospy.Publisher(topic_name1[0], Float64, queue_size=1)
     pub2 = rospy.Publisher(topic_name2[0], Float64, queue_size=1)
     pub3 = rospy.Publisher(topic_name3[0], Float64, queue_size=1)
@@ -71,11 +75,20 @@ if __name__ == '__main__':
     pub6 = rospy.Publisher(topic_name6[0], Float64, queue_size=1)
     pub7 = rospy.Publisher(topic_name7[0], Float64, queue_size=1)
     pub8 = rospy.Publisher(topic_name8[0], Float64, queue_size=1)
-
+    '''
+    msg_list = [Float64() for i in range(8)]
+    
     while not rospy.is_shutdown():
 
         ret = temp.measure()
-        
+
+        for h, i, j, k in zip(topic_list, pub_list, msg_list, range(8)):
+            if int(h[1]) == 0: pass
+            elif int(h[1]) == 1:
+                j.data = ret[k]
+                i.publish(j)
+                     
+        '''
         if int(topic_name1[1]) == 0: pass
         elif int(topic_name1[1]) == 1:
             msg1 = Float64()
@@ -131,4 +144,4 @@ if __name__ == '__main__':
             msg8.data = ret[7]                       
             # msg8.data = temp.measure_ch(8)
             pub8.publish(msg8)
-
+        '''
