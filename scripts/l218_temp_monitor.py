@@ -47,7 +47,8 @@ if __name__ == '__main__':
         rospy.logerr("{e.strerror}. host={host}".format(**locals()))
         sys.exit()
 
-    pub_list = [rospy.Publisher(topic[topic_name_index], Float64, queue_size=1) for topic in topic_list if int(topic[onoff_index]) == 1]
+    pub_list = [rospy.Publisher(topic[topic_name_index], Float64, queue_size=1) \
+                for topic in topic_list if int(topic[onoff_index]) == 1]
     msg_list = [Float64() for i in range(ch_number)]
     
     while not rospy.is_shutdown():
