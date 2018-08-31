@@ -52,11 +52,14 @@ if __name__ == '__main__':
 
     pub_list = [rospy.Publisher(topic[topic_name_index], Float64, queue_size=1) \
                 for topic in topic_list if int(topic[onoff_index]) == 1]
+    onoff_list = [topic[topic_name_index] for topic in topic_list if int(topic[onoff_index]) == 1]
     msg_list = [Float64() for i in range(ch_number)]
 
-    ret = temp.measure()
+while not rospy.is_shutdown():
 
-    for pub, msg, i in zip(pub_list, msg_list, range(ch_number)):
-        msg.data = ret[i]
+    ret_list = [pm.measure(ch=int(onoff[-1])) for onoff in onoff_list]
+
+    for pub, msg, ret, i in zip(pub_list, msg_list, ret_list, range(ch_number)):
+        msg.data = ret_list[i]
         pub.publish(msg)
     continue
