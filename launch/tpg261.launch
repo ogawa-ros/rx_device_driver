@@ -1,0 +1,8 @@
+<launch>
+  <node pkg="rx-device-driver" name="tpg261" type="tpg261_vaccume_monitor.py" required="true" output="screen">
+    <param name="~host" value="192.168.100.112" />
+    <param name="~port" value="9600" />
+    <param name="~rate" value="1" />
+    <param name="~topic" value="tpg261_torr" />
+  </node>
+</launch>
