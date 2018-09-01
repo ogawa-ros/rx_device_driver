@@ -1,16 +1,17 @@
 #! /usr/bin/env python3
 
+
 import rospy
 from std_msgs.msg import Int32
 from std_msgs.msg import Float64
-from rx-device-driver.msg import e8250d.msg
-
+from rx_device_driver.msg import e8250d_msg
 
 import sys
 import time
 import pymeasure
 
 node_name = 'e8250d'
+
 
 class e8257d_driver(object):
 
@@ -75,44 +76,43 @@ class e8257d_controller(object):
         topic_pub_freq = rospy.get_param('~topic_pub_freq')
         topic_pub_power = rospy.get_param('~topic_pub_power')
         topic_pub_onoff = rospy.get_param('~topic_pub_onoff')
+        topic_pub_status = rospy.get_param('~topic_pub_status')
         topic_sub_freq = rospy.get_param('~topic_sub_freq')
         topic_sub_power = rospy.get_param('~topic_sub_power')
         topic_sub_onoff = rospy.get_param('~topic_sub_onoff')
+        topic_sub_status = rospy.get_param('~topic_sub_status')
 
-        self.freq = 0
-        self.power = 0
-        self.onoff = 0
-        self.pub_freq = rospy.Publisher('lo_1st_freq', Float64, queue_size=1)
-        self.pub_power = rospy.Publisher('lo_1st_power', Float64, queue_size=1)
-        self.pub_onoff = rospy.Publisher('lo_1st_onoff', Int32, queue_size=1)
-        self.sub_freq = rospy.Subscriber('lo_1st_freq_cmd', Float64, self.set_freq)
-        self.sub_power = rospy.Subscriber('lo_1st_power_cmd', Float64, self.set_power)
-        self.sub_onoff = rospy.Subscriber('lo_1st_onoff_cmd', Int32, self.set_onoff)
-        self.pub = rospy.Publisher('status', String, queue_size=1)        
-        self.sub = rospy.Subscriber('aaa', Int32, self.get_status)
+        self.pub_freq = rospy.Publisher('{}'.format(topic_pub_freq), Float64, queue_size=1)
+        self.pub_power = rospy.Publisher('{}'.format(topic_pub_power), Float64, queue_size=1)
+        self.pub_onoff = rospy.Publisher('{}'.format(topic_pub_onoff), Int32, queue_size=1)
+        self.pub_status = rospy.Publisher('{}'.format(topic_pub_status), e8250d_msg, queue_size=1)
+        self.sub_freq = rospy.Subscriber('{}'.format(topic_sub_freq), Float64, self.set_freq)
+        self.sub_power = rospy.Subscriber('{}'.format(topic_sub_power), Float64, self.set_power)
+        self.sub_onoff = rospy.Subscriber('{}'.format(topic_sub_onoff), Int32, self.set_onoff)
+        self.sub_status = rospy.Subscriber('{}'.format(topic_sub_status), Int32, self.get_status)
         
     def set_freq(self, q):
         target = q.data
         self.sg.set_freq(target, 'GHz')
         self.pub_freq.publish(self.sg.get_freq())
-        self.freq = target
 
     def set_power(self, q):
         target = q.data
         self.sg.set_power(target)
         self.pub_power.publish(self.sg.get_power())
-        self.power = target
 
     def set_onoff(self, q):
         target = q.data
         self.sg.set_onoff(target)
         self.pub_onoff.publish(self.sg.get_onoff())
-        self.onoff = target
 
     def get_status(self, q):
-        status = {}
-        status['freq'], status['power'], status['onoff'] = self.freq, self.power, self.onoff
-        self.pub.publish(status)
+        status = e8250d_msg()
+        status.freq = self.sg.get_freq()
+        status.power = self.sg.get_power()
+        status.onoff = self.sg.get_onoff()
+        
+        self.pub_status.publish(status)
         return
 
 

@@ -1,13 +1,15 @@
 <launch>
-  <node pkg="rx-device-driver" name="e8250d" type="e8250d_signal_generator.py" required="true">
+  <node pkg="rx_device_driver" name="e8250d" type="e8250d_signal_generator.py" required="true">
     <param name="~host" value="192.168.100.152" />
     <param name="~port" value="19" />
     <param name="~rate" value="1" />
     <param name="~topic_pub_freq" value="lo_1st_freq" />
     <param name="~topic_pub_power" value="lo_1st_power" />
     <param name="~topic_pub_onoff" value="lo_1st_onoff" />
+    <param name="~topic_pub_status" value="lo_1st_status" />
     <param name="~topic_sub_freq" value="lo_1st_freq_cmd" />
     <param name="~topic_sub_power" value="lo_1st_power_cmd" />
     <param name="~topic_sub_onoff" value="lo_1st_onoff_cmd" />
+    <param name="~topic_sub_status" value="lo_1st_status_cmd" />
   </node>
 </launch>
