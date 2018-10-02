@@ -31,12 +31,10 @@ class tpg261_driver(object):
         return pressure
 
 if __name__ == '__main__':
-    node_name = 'lakeshore_218'
+    node_name = 'tpg261'
     rospy.init_node(node_name)
 
-    ch_number = 8
-    topic_name_index = 0
-    onoff_index = 1
+    ch_number = 1
     host = rospy.get_param('~host')
     port = rospy.get_param('~port')
     rate = rospy.get_param('~rate')
@@ -48,12 +46,13 @@ if __name__ == '__main__':
         rospy.logerr("{e.strerror}. host={host}".format(**locals()))
         sys.exit()
 
-        pub = rospy.Publisher(topic, Float64, queue_size=1)
-        msg = Float64()
+    pub = rospy.Publisher(topic, Float64, queue_size=1)
 
     while not rospy.is_shutdown():
 
-        ret = pressure.measure()
+        ret = pressure.query_pressure()
+        
+        msg = Float64()
         msg.data = ret
         pub.publish(msg)
         continue

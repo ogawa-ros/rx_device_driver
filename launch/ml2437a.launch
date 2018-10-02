@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="rx-device-driver" name="ml2437a" type="ml2437a_power_monitor.py" required="true" output="screen">
+  <node pkg="rx_device_driver" name="ml2437a" type="ml2437a_power_monitor.py" required="true" output="screen">
     <param name="~host" value="192.168.100.116" />
     <param name="~port" value="13" />
     <param name="~rate" value="1" />

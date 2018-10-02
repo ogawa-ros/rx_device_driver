@@ -1,15 +1,8 @@
 <launch>
-  <node pkg="rx-device-driver" name="lakeshore_218" type="l218_temp_monitor.py" required="true" output="screen">
-    <param name="~host" value="192.168.100.106" />
-    <param name="~port" value="1" />
+  <node pkg="rx_device_driver" name="lakeshore_218" type="l218_temp_monitor.py" required="true" output="screen">
+    <param name="~host" value="192.168.100.108" />
+    <param name="~port" value="13" />
     <param name="~rate" value="1" />
-    <param name="~topic1" value="[lakeshore218_ch1, 1]" />
-    <param name="~topic2" value="[lakeshore218_ch2, 0]" />
-    <param name="~topic3" value="[lakeshore218_ch3, 1]" />
-    <param name="~topic4" value="[lakeshore218_ch4, 0]" />
-    <param name="~topic5" value="[lakeshore218_ch5, 0]" />
-    <param name="~topic6" value="[lakeshore218_ch6, 1]" />
-    <param name="~topic7" value="[lakeshore218_ch7, 0]" />
-    <param name="~topic8" value="[lakeshore218_ch8, 0]" />
+    <param name="~onoff" value="[1,1,1,1,1,1,1,1]" />
   </node>
 </launch>

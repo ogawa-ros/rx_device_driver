@@ -1,11 +1,11 @@
 #! /usr/bin/env python3
 
+
 import sys
 import time
 import pymeasure
 
 import rospy
-import std_msgs
 from std_msgs.msg import Float64
 
 
@@ -29,7 +29,8 @@ class lakeshore218_driver(object):
     
 def str2list(param):
     return param.strip('[').strip(']').split(',')
-    
+
+
 if __name__ == '__main__':
     node_name = 'lakeshore_218'
     rospy.init_node(node_name)
@@ -40,7 +41,7 @@ if __name__ == '__main__':
     host = rospy.get_param('~host')
     port = rospy.get_param('~port')
     rate = rospy.get_param('~rate')
-    topic_list = [str2list(rospy.get_param('~topic{}'.format(i+1))) for i in range(ch_number)]
+    onoff_list = list(map(int, str2list(rospy.get_param('~onoff'))))
 
     try:
         temp = lakeshore218_driver(host, port)
@@ -48,17 +49,19 @@ if __name__ == '__main__':
         rospy.logerr("{e.strerror}. host={host}".format(**locals()))
         sys.exit()
 
-    pub_list = [rospy.Publisher(topic[topic_name_index], Float64, queue_size=1) \
-                for topic in topic_list if int(topic[onoff_index]) == 1]
-    onoff_list = [topic[topic_name_index] for topic in topic_list if int(topic[onoff_index]) ==1]
-    msg_list = [Float64() for i in range(ch_number)]
+    pub_list = [rospy.Publisher('lakeshore_ch{0}'.format(ch),
+                                Float64,
+                                queue_size=1) \
+                for ch, onoff in enumerate(onoff_list, start=1) if onoff == 1]
 
     while not rospy.is_shutdown():
 
         ret = temp.measure()
-
-        for pub, msg, onoff in zip(pub_list, msg_list, onoff_list):
-            msg.data = ret[int(onoff[-1]-1)]
-            pub.publish(msg)
+        for pub, onoff, idx in zip(pub_list, onoff_list, range(8)):
+            msg = Float64()
+            if onoff == 1:
+                msg.data = ret[idx]
+                pub.publish(msg)
+            else: pass
         continue
 
