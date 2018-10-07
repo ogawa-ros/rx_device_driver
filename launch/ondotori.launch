@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="rx_device_driver" name="ondotori" type="ondotori_monitor.py" required="true" output="screen">
+    <param name="~host" value="192.168.100.105" />
+    <param name="~rate" value="1" />
+  </node>
+</launch>
