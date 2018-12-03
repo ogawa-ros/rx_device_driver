@@ -6,7 +6,6 @@ from std_msgs.msg import Float64
 import sys
 import time
 import urllib.request
-import NASCORX_System.device.TR72W as TR72W
 
 name = 'ondotori'
 

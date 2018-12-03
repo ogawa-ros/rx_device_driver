@@ -90,14 +90,17 @@ class e8257d_controller(object):
     def set_freq(self, q):
         target = q.data
         self.sg.set_freq(target, 'GHz')
+        self.pub_freq.publish(self.sg.get_freq())        
 
     def set_power(self, q):
         target = q.data
         self.sg.set_power(target)
+        self.pub_power.publish(self.sg.get_power())        
 
     def set_onoff(self, q):
         target = int(q.data)
         self.sg.set_onoff(target)
+        self.pub_onoff.publish(self.sg.get_onoff())        
 
 
 if __name__ == '__main__':
