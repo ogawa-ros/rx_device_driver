@@ -88,33 +88,33 @@ class e8257d_controller(object):
         self.sg_name = rospy.get_param('~sg_name')
         self.sg = e8257d_driver(host, port)
 
-        topic_list = ['freq', 'power', 'onoff']
-        data_class_list = [Float64, Float64, Int32]
-        pub_list = [
+        self.topic_list = ['freq', 'power', 'onoff']
+        self.data_class_list = [Float64, Float64, Int32]
+        self.pub_list = [
             rospy.Publisher(
                 name = '{0}_{1}'.format(self.sg_name, topic),
                 data_class = _data_class,
                 latch = True,
                 queue_size = 1
             )
-            for topic, _data_class in zip(topic_list, data_class_list)
+            for topic, _data_class in zip(self.topic_list, self.data_class_list)
         ]
-        sub_list = [
-            rospy.Publisher(
+        self.sub_list = [
+            rospy.Subscriber(
                 name = '{0}_{1}_cmd'.format(self.sg_name, topic),
                 data_class = _data_class,
                 callback = self.callback
                 callback_args = topic
                 queue_size = 1
             )
-            for topic, _data_class in zip(topic_list, data_class_list)
+            for topic, _data_class in zip(self.topic_list, self.data_class_list)
         ]
 
     def callback(self, q, topic):
         target = q.data
         exec('self.sg.set_{}(target)'.format(topic))
         current = exec('self.sg.get_{}()'.format(topic))
-        self.pub_list[topic_list.index(topic)].publish(current)
+        self.pub_list[self.topic_list.index(topic)].publish(current)
         return
 
 
