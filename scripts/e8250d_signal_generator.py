@@ -10,7 +10,11 @@ import time
 import pymeasure
 
 
-node_name = 'e8250d'
+node_name = 'e8257d'
+
+
+class InvalidRangeError(Exception):
+    pass
 
 
 class e8257d_driver(object):
@@ -18,9 +22,9 @@ class e8257d_driver(object):
     def __init__(self, IP='', GPIB=1):
         self.IP = IP
         self.GPIB = GPIB
-        self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
-        
+
     def set_freq(self, freq, unit='GHz'):
+        self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
         self.com.open()
         self.com.send('FREQ:CW %.10f %s'%(freq, unit))
         self.com.close()
@@ -35,9 +39,15 @@ class e8257d_driver(object):
         return float(ret)/1e+9
 
     def set_power(self, power=-20.0):
-        self.com.open()
-        self.com.send('POW %f dBm'%(power))
-        self.com.close()
+        self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
+        if -20.0<=power<=30.0:
+            self.com.open()
+            self.com.send('POW %f dBm'%(power))
+            self.com.close()
+        else:
+            msg = 'Power range is -20.0[dBm] -- 30.0[dBm],'
+            msg += ' while {}[dBm] is given.'.format(power)
+            raise InvalidRangeError(msg)
         return
 
     def get_power(self):
@@ -71,36 +81,37 @@ class e8257d_controller(object):
     def __init__(self):
         host = rospy.get_param('~host')
         port = rospy.get_param('~port')
+        self.sg_name = rospy.get_param('~sg_name')
         self.sg = e8257d_driver(host, port)
-        
-        topic_pub_freq = rospy.get_param('~topic_pub_freq')
-        topic_pub_power = rospy.get_param('~topic_pub_power')
-        topic_pub_onoff = rospy.get_param('~topic_pub_onoff')
-        topic_sub_freq = rospy.get_param('~topic_sub_freq')
-        topic_sub_power = rospy.get_param('~topic_sub_power')
-        topic_sub_onoff = rospy.get_param('~topic_sub_onoff')
 
-        self.pub_freq = rospy.Publisher('{}'.format(topic_pub_freq), Float64, queue_size=1)
-        self.pub_power = rospy.Publisher('{}'.format(topic_pub_power), Float64, queue_size=1)
-        self.pub_onoff = rospy.Publisher('{}'.format(topic_pub_onoff), Int32, queue_size=1)
-        self.sub_freq = rospy.Subscriber('{}'.format(topic_sub_freq), Float64, self.set_freq)
-        self.sub_power = rospy.Subscriber('{}'.format(topic_sub_power), Float64, self.set_power)
-        self.sub_onoff = rospy.Subscriber('{}'.format(topic_sub_onoff), Int32, self.set_onoff)
-        
-    def set_freq(self, q):
+        topic_list = ['freq', 'power', 'onoff']
+        data_class_list = [Float64, Float64, Int32]
+        pub_list = [
+            rospy.Publisher(
+                name = '{0}_{1}'.format(self.sg_name, topic),
+                data_class = _data_class,
+                latch = True,
+                queue_size = 1
+            )
+            for topic, _data_class in zip(topic_list, data_class_list)
+        ]
+        sub_list = [
+            rospy.Publisher(
+                name = '{0}_{1}_cmd'.format(self.sg_name, topic),
+                data_class = _data_class,
+                callback = self.callback
+                callback_args = topic
+                queue_size = 1
+            )
+            for topic, _data_class in zip(topic_list, data_class_list)
+        ]
+
+    def callback(self, q, topic):
         target = q.data
-        self.sg.set_freq(target, 'GHz')
-        self.pub_freq.publish(self.sg.get_freq())        
-
-    def set_power(self, q):
-        target = q.data
-        self.sg.set_power(target)
-        self.pub_power.publish(self.sg.get_power())        
-
-    def set_onoff(self, q):
-        target = int(q.data)
-        self.sg.set_onoff(target)
-        self.pub_onoff.publish(self.sg.get_onoff())        
+        exec('self.sg.set_{}(target)'.format(topic))
+        current = exec('self.sg.get_{}()'.format(topic))
+        self.pub_list[topic_list.index(topic)].publish(current)
+        return
 
 
 if __name__ == '__main__':
