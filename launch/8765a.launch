@@ -1,0 +1,87 @@
+<launch>
+
+  <node name = "switch_1X_cmd_writer"
+        type = "relay.py"
+        pkg = "nasco_system">
+    <param name = "config_file"
+        value = "$(find nasco_system)/relay_conf/switch_1X_cmd_writer.conf" />
+  </node>
+
+  <node name = "switch_1X_reader"
+        type = "relay.py"
+        pkg = "nasco_system">
+    <param name = "config_file"
+        value = "$(find nasco_system)/relay_conf/switch_1X_reader.conf" />
+  </node>
+
+  <node name = "switch_1Y_cmd_writer"
+        type = "relay.py"
+        pkg = "nasco_system">
+    <param name = "config_file"
+        value = "$(find nasco_system)/relay_conf/switch_1Y_cmd_writer.conf" />
+  </node>
+
+  <node name = "switch_1Y_reader"
+        type = "relay.py"
+        pkg = "nasco_system">
+    <param name = "config_file"
+        value = "$(find nasco_system)/relay_conf/switch_1Y_reader.conf" />
+  </node>
+
+  <node name = "switch_2X_cmd_writer"
+        type = "relay.py"
+        pkg = "nasco_system">
+    <param name = "config_file"
+        value = "$(find nasco_system)/relay_conf/switch_2X_cmd_writer.conf" />
+  </node>
+
+  <node name = "switch_2X_reader"
+        type = "relay.py"
+        pkg = "nasco_system">
+    <param name = "config_file"
+        value = "$(find nasco_system)/relay_conf/switch_2X_reader.conf" />
+  </node>
+
+  <node name = "switch_2Y_cmd_writer"
+        type = "relay.py"
+        pkg = "nasco_system">
+    <param name = "config_file"
+        value = "$(find nasco_system)/relay_conf/switch_2Y_cmd_writer.conf" />
+  </node>
+
+  <node name = "switch_2Y_reader"
+        type = "relay.py"
+        pkg = "nasco_system">
+    <param name = "config_file"
+        value = "$(find nasco_system)/relay_conf/switch_2Y_reader.conf" />
+  </node>
+
+  <node name = "switch_1X"
+        type = "8765a.py"
+        pkg = "nasco_system">
+    <param name = "~ch"
+        value = "1X" />
+  </node>
+
+  <node name = "switch_1Y"
+        type = "8765a.py"
+        pkg = "nasco_system">
+    <param name = "~ch"
+        value = "1Y" />
+  </node>
+
+  <node name = "switch_2X"
+        type = "8765a.py"
+        pkg = "nasco_system">
+    <param name = "~ch"
+        value = "2X" />
+  </node>
+
+  <node name = "switch_2Y"
+        type = "8765a.py"
+        pkg = "nasco_system">
+    <param name = "~ch"
+        value = "2Y" />
+  </node>
+
+</launch>

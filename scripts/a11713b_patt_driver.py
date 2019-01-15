@@ -22,20 +22,26 @@ class a11713b_driver(object):
     def __init__(self, IP='192.168.100.1', port=5025, connection='GPIB'):
         self.IP = IP
         self.port = port
+
         if connection == 'GPIB':
             self.com = pymeasure.gpib_prologix(self.IP, self.port)
+
         elif connection == 'LAN':
             self.com = pymeasure.ethernet(self.IP, self.port)
         return
 
     def set_level(self, level, ch):
         self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
+
         if 0 <= level <= 11 and type(level) == int:
             self.com.open()
+
             if ch == '1X':
                 self.com.send('ATTenuator:BANK1:X {}'.format(level))
+
             elif ch == '1Y':
                 self.com.send('ATTenuator:BANK1:Y {}'.format(level))
+
             self.com.close()
         else:
             msg = 'Available level: 0, 1, 2, ..., 11,'
@@ -100,7 +106,3 @@ if __name__ == '__main__':
     rospy.init_node(node_name)
     a11713b_controller()
     rospy.spin()
-
-
-
-

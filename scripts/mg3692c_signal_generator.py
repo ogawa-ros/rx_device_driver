@@ -16,7 +16,6 @@ node_name = 'mg3692c'
 class InvalidRangeError(Exception):
     pass
 
-<<<<<<< HEAD
 
 class mg3692c_driver(object):
 
@@ -126,5 +125,3 @@ if __name__ == '__main__':
     rospy.init_node(node_name)
     mg3692c_controller()
     rospy.spin()
-=======
->>>>>>> e8250d
