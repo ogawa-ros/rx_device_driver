@@ -31,6 +31,7 @@ class e8257d_driver(object):
         return
 
     def get_freq(self):
+        self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
         self.com.open()
         self.com.send('FREQ:CW?')
         ret = self.com.readline()
@@ -51,6 +52,7 @@ class e8257d_driver(object):
         return
 
     def get_power(self):
+        self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
         self.com.open()
         self.com.send('POW?')
         ret = self.com.readline()
@@ -59,6 +61,7 @@ class e8257d_driver(object):
         return float(ret)
 
     def set_onoff(self, onoff=0):
+        self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
         self.com.open()
         if onoff==1:
             self.com.send('OUTP ON')
@@ -68,6 +71,7 @@ class e8257d_driver(object):
         return
 
     def get_onoff(self):
+        self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
         self.com.open()
         self.com.send('OUTP?')
         ret = self.com.readline()
