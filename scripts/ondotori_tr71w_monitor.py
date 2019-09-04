@@ -60,16 +60,13 @@ class tr71w(object):
 
 
 if __name__ == '__main__':
-
-    ch1 = '1'
-    ch2 = '2'
     
     host = rospy.get_param('~host')
     rate = rospy.get_param('~rate')
     ondotori_no = rospy.get_param('~ondotori_no')
     
-    name1 = node_name + ondotori_no + '_temp_' + ch1 
-    name2 = node_name + ondotori_no + '_temp_' + ch2
+    name1 = node_name + ondotori_no + '_temp_ch1' 
+    name2 = node_name + ondotori_no + '_temp_ch2'
     
     rospy.init_node(node_name)
 
