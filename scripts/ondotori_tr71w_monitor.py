@@ -4,7 +4,6 @@
 # import modules
 import rospy
 from std_msgs.msg import Float64
-
 import sys
 import time
 import urllib.request
@@ -96,7 +95,6 @@ if __name__ == '__main__':
         continue
 
 
-    
 # History
 # -------
 # written by S.Okuda
