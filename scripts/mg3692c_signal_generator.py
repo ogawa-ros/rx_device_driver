@@ -93,7 +93,7 @@ class mg3692c_controller(object):
 
         topic_list = ['freq', 'power', 'onoff']
         data_class_list = [Float64, Float64, Int32]
-        pub_list = [
+        self.pub_list = [
             rospy.Publisher(
                 name = '{0}_{1}'.format(self.sg_name, topic),
                 data_class = _data_class,
@@ -102,7 +102,7 @@ class mg3692c_controller(object):
             )
             for topic, _data_class in zip(topic_list, data_class_list)
         ]
-        sub_list = [
+        self.sub_list = [
             rospy.Publisher(
                 name = '{0}_{1}_cmd'.format(self.sg_name, topic),
                 data_class = _data_class,
@@ -118,6 +118,7 @@ class mg3692c_controller(object):
         exec('self.sg.set_{}(target)'.format(topic))
         current = exec('self.sg.get_{}()'.format(topic))
         self.pub_list[topic_list.index(topic)].publish(current)
+
         return
 
 
