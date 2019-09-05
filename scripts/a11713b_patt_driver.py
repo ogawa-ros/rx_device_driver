@@ -25,16 +25,18 @@ class a11713b_driver(object):
 
         if connection == 'GPIB':
             self.com = pymeasure.gpib_prologix(self.IP, self.port)
+            self.com.open()
 
         elif connection == 'LAN':
             self.com = pymeasure.ethernet(self.IP, self.port)
+            self.com.open()
         return
 
     def set_level(self, level, ch):
         # self.com = pymeasure.gpib_prologix(self.IP, self.port)
 
         if 0 <= level <= 11 and type(level) == int:
-            self.com.open()
+            # self.com.open()
 
             if ch == '1X':
                 self.com.send('ATTenuator:BANK1:X {}'.format(level))
