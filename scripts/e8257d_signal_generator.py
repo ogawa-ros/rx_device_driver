@@ -113,9 +113,9 @@ class e8257d_controller(object):
 
     def callback(self, q, topic):
         target = q.data
-        exec('self.sg.set_{}(target)'.format(topic))
+        exec('self.sg.set_{0}(target)'.format(topic))
         time.sleep(0.5)
-        current = exec('self.sg.get_{}()'.format(topic))
+        current = exec('self.sg.get_{0}()'.format(topic))
         self.pub_list[self.topic_list.index(topic)].publish(current)
         return
 
