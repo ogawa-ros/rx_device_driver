@@ -103,8 +103,8 @@ class e8257d_controller(object):
             rospy.Subscriber(
                 name = '{0}_{1}_cmd'.format(self.sg_name, topic),
                 data_class = _data_class,
-                callback = self.callback
-                callback_args = topic
+                callback = self.callback,
+                callback_args = topic,
                 queue_size = 1
             )
             for topic, _data_class in zip(self.topic_list, self.data_class_list)
