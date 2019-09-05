@@ -112,13 +112,13 @@ class mg3692c_controller(object):
             )
             for topic, _data_class in zip(self.topic_list, self.data_class_list)
         ]
+        return
 
     def callback(self, q, topic):
         target = q.data
         exec('self.sg.set_{}(target)'.format(topic))
         current = exec('self.sg.get_{}()'.format(topic))
         self.pub_list[topic_list.index(topic)].publish(current)
-
         return
 
 
