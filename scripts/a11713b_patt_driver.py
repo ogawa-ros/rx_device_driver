@@ -31,7 +31,7 @@ class a11713b_driver(object):
         return
 
     def set_level(self, level, ch):
-        self.com = pymeasure.gpib_prologix(self.IP, self.port)
+        # self.com = pymeasure.gpib_prologix(self.IP, self.port)
 
         if 0 <= level <= 11 and type(level) == int:
             self.com.open()
@@ -42,7 +42,7 @@ class a11713b_driver(object):
             elif ch == '1Y':
                 self.com.send('ATTenuator:BANK1:Y {}'.format(level))
 
-            self.com.close()
+        # self.com.close()
         else:
             msg = 'Available level: 0, 1, 2, ..., 11,'
             msg += ' while is {} given.'.format(level)
@@ -50,12 +50,12 @@ class a11713b_driver(object):
         return
 
     def query_level(self):
-        self.com.open()
+        # self.com.open()
         self.com.send('ATTenuator:BANK1:X?')
         ret1 = self.com.readline()
         self.com.send('ATTenuator:BANK1:Y?')
         ret2 = self.com.readline()
-        self.com.close()
+        # self.com.close()
         att1X = int(ret1)
         att1Y = int(ret2)
         level = [att1X, att1Y]
