@@ -23,7 +23,7 @@ class e8257d_driver(object):
         self.IP = IP
         self.GPIB = GPIB
         # self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
-        self.com = pymeasure.eh(self.IP, self.GPIB)
+        self.com = pymeasure.ethernet(self.IP, self.GPIB)
         self.com.open()
 
 
