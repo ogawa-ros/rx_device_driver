@@ -86,38 +86,38 @@ class mg3692c_controller(object):
         self.sg = mg3692c_driver(host, port)
 
     self.pub_freq = rospy.Publisher(
-        name = '{}_freq'.format(self.sg_name),
+        name = '{}_freq'.format(node_name),
         data_class = Float64,
         latch = True,
         queue_size = 1
         )
     self.pub_power = rospy.Publisher(
-        name = '{}_power'.format(self.sg_name),
+        name = '{}_power'.format(node_name),
         data_class = Float64,
         latch = True,
         queue_size = 1
         )
     self.pub_freq = rospy.Publisher(
-        name = '{}_onoff'.format(self.sg_name),
+        name = '{}_onoff'.format(node_name),
         data_class = Int32,
         latch = True,
         queue_size = 1
         )
 
     self.sub_freq = rospy.Subscriber(
-        name = '{}_freq_cmd'.format(self.sg_name),
+        name = '{}_freq_cmd'.format(node_name),
         data_class = Float64,
         callback = self.callback_freq,
         queue_size = 1
         )
     self.sub_power = rospy.Subscriber(
-        name = '{}_power_cmd'.format(self.sg_name),
+        name = '{}_power_cmd'.format(node_name),
         data_class = Float64,
         callback = self.callback_power,
         queue_size = 1
         )
     self.sub_onoff = rospy.Subscriber(
-        name = '{}_onoff_cmd'.format(self.sg_name),
+        name = '{}_onoff_cmd'.format(node_name),
         data_class = Float64,
         callback = self.callback_onoff,
         queue_size = 1
