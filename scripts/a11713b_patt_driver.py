@@ -31,7 +31,7 @@ class a11713b_driver(object):
         return
 
     def set_level(self, level, ch):
-        self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
+        self.com = pymeasure.gpib_prologix(self.IP, self.port)
 
         if 0 <= level <= 11 and type(level) == int:
             self.com.open()
