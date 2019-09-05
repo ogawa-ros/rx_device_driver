@@ -95,21 +95,18 @@ class e8257d_controller(object):
         self.sub_freq = rospy.Subscriber(
             name = '{}_freq_cmd'.format(self.sg_name),
             data_class = Float64,
-            latch = True,
             callback = self.callback_freq,
             queue_size = 1
             )
         self.sub_power = rospy.Subscriber(
             name = '{}_power_cmd'.format(self.sg_name),
             data_class = Float64,
-            latch = True,
             callback = self.callback_power,
             queue_size = 1
             )
         self.sub_onoff = rospy.Subscriber(
             name = '{}_onoff_cmd'.format(self.sg_name),
             data_class = Float64,
-            latch = True,
             callback = self.callback_onoff,
             queue_size = 1
             )
