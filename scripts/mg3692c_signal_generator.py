@@ -91,8 +91,8 @@ class mg3692c_controller(object):
         self.sg_name = rospy.get_param('~sg_name')
         self.sg = mg3692c_driver(host, port)
 
-        topic_list = ['freq', 'power', 'onoff']
-        data_class_list = [Float64, Float64, Int32]
+        self.topic_list = ['freq', 'power', 'onoff']
+        self.data_class_list = [Float64, Float64, Int32]
         self.pub_list = [
             rospy.Publisher(
                 name = '{0}_{1}'.format(self.sg_name, topic),
@@ -100,7 +100,7 @@ class mg3692c_controller(object):
                 latch = True,
                 queue_size = 1
             )
-            for topic, _data_class in zip(topic_list, data_class_list)
+            for topic, _data_class in zip(self.topic_list, self.data_class_list)
         ]
         self.sub_list = [
             rospy.Publisher(
@@ -110,7 +110,7 @@ class mg3692c_controller(object):
                 callback_args = topic,
                 queue_size = 1
             )
-            for topic, _data_class in zip(topic_list, data_class_list)
+            for topic, _data_class in zip(self.topic_list, self.data_class_list)
         ]
 
     def callback(self, q, topic):
