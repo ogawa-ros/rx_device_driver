@@ -40,9 +40,11 @@ class a11713b_driver(object):
 
             if ch == '1X':
                 self.com.send('ATTenuator:BANK1:X {}'.format(level))
+                time.sleep(0.5)
 
             elif ch == '1Y':
                 self.com.send('ATTenuator:BANK1:Y {}'.format(level))
+                time.sleep(0.5)
 
         # self.com.close()
         else:
