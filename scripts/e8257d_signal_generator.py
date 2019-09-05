@@ -73,34 +73,69 @@ class e8257d_controller(object):
         self.sg_name = rospy.get_param('~sg_name')
         self.sg = e8257d_driver(host, port)
 
-        self.topic_list = ['freq', 'power', 'onoff']
-        self.data_class_list = [Float64, Float64, Int32]
-        self.pub_list = [
-            rospy.Publisher(
-                name = '{0}_{1}'.format(self.sg_name, topic),
-                data_class = _data_class,
-                latch = True,
-                queue_size = 1
+        self.pub_freq = rospy.Publisher(
+            name = '{}_freq'.format(self.sg_name),
+            data_class = Float64,
+            latch = True,
+            queue_size = 1
             )
-            for topic, _data_class in zip(self.topic_list, self.data_class_list)
-        ]
-        self.sub_list = [
-            rospy.Subscriber(
-                name = '{0}_{1}_cmd'.format(self.sg_name, topic),
-                data_class = _data_class,
-                callback = self.callback,
-                callback_args = topic,
-                queue_size = 1
+        self.pub_power = rospy.Publisher(
+            name = '{}_power'.format(self.sg_name),
+            data_class = Float64,
+            latch = True,
+            queue_size = 1
             )
-            for topic, _data_class in zip(self.topic_list, self.data_class_list)
-        ]
+        self.pub_freq = rospy.Publisher(
+            name = '{}_onoff'.format(self.sg_name),
+            data_class = Int32,
+            latch = True,
+            queue_size = 1
+            )
 
-    def callback(self, q, topic):
+        self.sub_freq = rospy.Subscriber(
+            name = '{}_freq_cmd'.format(self.sg_name),
+            data_class = Float64,
+            latch = True,
+            callback = self.callback_freq,
+            queue_size = 1
+            )
+        self.sub_power = rospy.Subscriber(
+            name = '{}_power_cmd'.format(self.sg_name),
+            data_class = Float64,
+            latch = True,
+            callback = self.callback_power,
+            queue_size = 1
+            )
+        self.sub_onoff = rospy.Subscriber(
+            name = '{}_onoff_cmd'.format(self.sg_name),
+            data_class = Float64,
+            latch = True,
+            callback = self.callback_onoff,
+            queue_size = 1
+            )
+
+    def callback_freq(self, q):
         target = q.data
-        exec('self.sg.set_{0}(target)'.format(topic))
-        time.sleep(0.5)
-        current = exec('self.sg.get_{0}()'.format(topic))
-        self.pub_list[self.topic_list.index(topic)].publish(current)
+        self.sg.set_freq(target)
+        time.sleep(1)
+        current = self.sg.get_freq()
+        self.pub_freq.publish(current)
+        return
+
+    def callback_power(self, q):
+        target = q.data
+        self.sg.set_power(target)
+        time.sleep(1)
+        current = self.sg.get_power()
+        self.pub_power.publish(current)
+        return
+
+    def callback_onoff(self, q):
+        target = q.data
+        self.sg.set_onoff(target)
+        time.sleep(1)
+        current = self.sg.get_onoff()
+        self.pub_onoff.publish(current)
         return
 
 
