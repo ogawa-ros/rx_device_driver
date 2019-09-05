@@ -63,9 +63,10 @@ class mg3692c_driver(object):
         self.com.open()
         if onoff==1:
             self.com.send('OUTP ON')
+            self.com.close()
         else:
             self.com.send('OUTP OFF')
-        self.com.close()
+            self.com.close()
         return
 
     def query_output(self):
