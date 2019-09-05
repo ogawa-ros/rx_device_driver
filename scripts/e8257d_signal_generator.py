@@ -97,7 +97,7 @@ class e8257d_controller(object):
             latch = True,
             queue_size = 1
             )
-        self.pub_freq = rospy.Publisher(
+        self.pub_onoff = rospy.Publisher(
             name = '{}_onoff'.format(node_name),
             data_class = Int32,
             latch = True,
