@@ -60,7 +60,7 @@ if __name__ == '__main__':
         msg_temp1.data = float(ret[0])
         msg_temp2.data = float(ret[1])
 
-        pub_temp.publish(msg_temp1)
-        pub_temp.publish(msg_temp2)
+        pub_temp1.publish(msg_temp1)
+        pub_temp2.publish(msg_temp2)
 
         continue
