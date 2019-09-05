@@ -115,7 +115,6 @@ class e8257d_controller(object):
         exec('self.sg.set_{}(target)'.format(topic))
         current = exec('self.sg.get_{}()'.format(topic))
         self.pub_list[self.topic_list.index(topic)].publish(current)
-
         return
 
 

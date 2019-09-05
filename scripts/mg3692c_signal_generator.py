@@ -112,7 +112,7 @@ class mg3692c_controller(object):
             )
             for topic, _data_class in zip(self.topic_list, self.data_class_list)
         ]
-        return
+
 
     def callback(self, q, topic):
         target = q.data
