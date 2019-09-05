@@ -89,7 +89,7 @@ class a11713b_controller(object):
                 name = '{0}_{1}_{2}_level_cmd'.format(node_name, ch, self.driver_no),
                 data_class = Int32,
                 callback = self.callback,
-                callback_args = ch
+                callback_args = ch,
                 queue_size = 1
             )
             for ch in self.ch_list
