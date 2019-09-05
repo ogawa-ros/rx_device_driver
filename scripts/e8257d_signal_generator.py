@@ -23,6 +23,7 @@ class e8257d_driver(object):
         self.IP = IP
         self.GPIB = GPIB
 
+
     def set_freq(self, freq, unit='GHz'):
         self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
         self.com.open()
@@ -113,6 +114,7 @@ class e8257d_controller(object):
     def callback(self, q, topic):
         target = q.data
         exec('self.sg.set_{}(target)'.format(topic))
+        time.sleep(0.5)
         current = exec('self.sg.get_{}()'.format(topic))
         self.pub_list[self.topic_list.index(topic)].publish(current)
         return
