@@ -24,13 +24,12 @@ class e8257d_driver(object):
         self.GPIB = GPIB
         # self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
         self.com = pymeasure.ethernet(self.IP, self.GPIB)
-        self.com.open()
 
 
     def set_freq(self, freq, unit='GHz'):
         self.com.open()
         self.com.send('FREQ:CW %.10f %s'%(freq, unit))
-
+        self.com.close()
         return
 
     def get_freq(self):
