@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     host = rospy.get_param('~host')
     rate = rospy.get_param('~rate')
-    ondotori_no = rospy.get_param('~ondotori_no')
+    ondotori_no = str(rospy.get_param('~ondotori_no'))
 
     name1 = node_name + ondotori_no + '_temp_ch1'
     name2 = node_name + ondotori_no + '_temp_ch2'
