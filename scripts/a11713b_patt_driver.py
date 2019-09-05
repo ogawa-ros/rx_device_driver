@@ -100,7 +100,7 @@ class a11713b_controller(object):
         level = q.data
         self.driver.set_level(level=level, ch=ch)
         current = self.driver.query_level()[self.ch_list.index(ch)]
-        self.pub_list[self.ch_list.index(ch)].publisher(cuurent)
+        self.pub_list[self.ch_list.index(ch)].publish(cuurent)
         return
 
 if __name__ == '__main__':
