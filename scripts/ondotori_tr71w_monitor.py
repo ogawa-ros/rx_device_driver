@@ -1,5 +1,4 @@
  #! /usr/bin/env python
-# _*_ coding: UTF-8 _*_
 
 # import modules
 import rospy
@@ -12,36 +11,11 @@ import urllib.request
 node_name = 'tr71w'
 
 class tr71w(object):
-    """
-    DESCRIPTION
-    ================
-    This class controls the thermometer TR-71W.
-
-    ARGUMENTS
-    ================
-    1. IP: IP address of the TR-71W
-        Type: string
-        Default: '192.168.100.1'
-    """
-
     def __init__(self, IP='192.168.100.1'):
         self.IP = IP
         self.url = 'http://'+self.IP+'/B/crrntdata/cdata.txt'
-        
+
     def temp(self):
-        """
-        DESCRIPTION
-        ================
-        This function queries the room temperature.
-        
-        ARGUMENTS
-        ================
-        Nothing.        
-        
-        RETURNS
-        ================
-        1. The room temperature [K]: float type
-        """
         res = urllib.request.urlopen(self.url)
         page = res.read()
         decoded_page = page.decode('shift_jis')
@@ -60,15 +34,14 @@ class tr71w(object):
 
 
 if __name__ == '__main__':
-    
+    rospy.init_node(node_name)
+
     host = rospy.get_param('~host')
     rate = rospy.get_param('~rate')
     ondotori_no = rospy.get_param('~ondotori_no')
-    
-    name1 = node_name + ondotori_no + '_temp_ch1' 
+
+    name1 = node_name + ondotori_no + '_temp_ch1'
     name2 = node_name + ondotori_no + '_temp_ch2'
-    
-    rospy.init_node(node_name)
 
     try:
         ondo = tr71w(host)
@@ -78,7 +51,7 @@ if __name__ == '__main__':
 
     pub_temp1 = rospy.Publisher(name1, Float64, queue_size=1)
     pub_temp2 = rospy.Publisher(name2, Float64, queue_size=1)
-    
+
     while not rospy.is_shutdown():
 
         ret = ondo.temp()
@@ -91,10 +64,3 @@ if __name__ == '__main__':
         pub_temp.publish(msg_temp2)
 
         continue
-
-
-
-
-# History
-# -------
-# written by S.Okuda
