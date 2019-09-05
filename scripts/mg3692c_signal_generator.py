@@ -103,7 +103,7 @@ class mg3692c_controller(object):
             for topic, _data_class in zip(self.topic_list, self.data_class_list)
         ]
         self.sub_list = [
-            rospy.Publisher(
+            rospy.Subscriber(
                 name = '{0}_{1}_cmd'.format(self.sg_name, topic),
                 data_class = _data_class,
                 callback = self.callback,
