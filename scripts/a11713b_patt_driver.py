@@ -68,8 +68,9 @@ class a11713b_controller(object):
     def __init__(self):
         host = rospy.get_param('~host')
         port = rospy.get_param('~port')
+        connection = rospy.get_param('~connection')
         self.driver_no = rospy.get_param('~driver_no')
-        self.driver = a11713b_driver(host, port)
+        self.driver = a11713b_driver(host, port, connection)
 
         self.ch_list = ['1X', '1Y']
 
