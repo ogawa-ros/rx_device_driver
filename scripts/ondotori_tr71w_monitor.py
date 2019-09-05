@@ -40,8 +40,8 @@ if __name__ == '__main__':
     rate = rospy.get_param('~rate')
     ondotori_no = str(rospy.get_param('~ondotori_no'))
 
-    name1 = node_name + ondotori_no + '_temp_ch1'
-    name2 = node_name + ondotori_no + '_temp_ch2'
+    name1 = node_name + '_' + ondotori_no + '_temp_ch1'
+    name2 = node_name + '_' + ondotori_no + '_temp_ch2'
 
     try:
         ondo = tr71w(host)
