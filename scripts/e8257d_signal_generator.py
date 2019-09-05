@@ -22,7 +22,8 @@ class e8257d_driver(object):
     def __init__(self, IP='', GPIB=1):
         self.IP = IP
         self.GPIB = GPIB
-        self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
+        # self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
+        self.com = pymeasure.eh(self.IP, self.GPIB)
         self.com.open()
 
 
