@@ -25,13 +25,13 @@ class mg3692c_driver(object):
         self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
 
     def set_freq(self, freq, unit='GHz'):
-        self.open()
+        self.com.open()
         self.com.send('FREQ:CW %.10f %s'%(freq, unit))
-        self.close()
+        self.com.close()
         return
 
     def query_freq(self):
-        self.open()
+        self.com.open()
         self.com.send('FREQ:CW?')
         ret = self.com.readline()
         self.com.close()
@@ -41,9 +41,9 @@ class mg3692c_driver(object):
 
     def set_power(self, power=-20.0):
         if -20.0<=power<=30.0:
-            self.open()
+            self.com.open()
             self.com.send('POW %f dBm'%(power))
-            self.close()
+            self.com.close()
         else:
             msg = 'Power range is -20.0[dBm] -- 30.0[dBm],'
             msg += ' while {}[dBm] is given.'.format(power)
@@ -51,10 +51,10 @@ class mg3692c_driver(object):
         return
 
     def query_power(self):
-        self.open()
+        self.com.open()
         self.com.send('POW?')
         ret = self.com.readline()
-        self.close()
+        self.com.close()
         power = float(ret)
 
         return power
