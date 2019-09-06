@@ -119,7 +119,7 @@ class mg3692c_controller(object):
             )
         self.sub_onoff = rospy.Subscriber(
             name = '{}_onoff_cmd'.format(node_name),
-            data_class = Float64,
+            data_class = Int32,
             callback = self.callback_onoff,
             queue_size = 1
             )
