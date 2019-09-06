@@ -30,7 +30,7 @@ class mg3692c_driver(object):
         self.com.close()
         return
 
-    def query_freq(self):
+    def get_freq(self):
         self.com.open()
         self.com.send('FREQ:CW?')
         ret = self.com.readline()
@@ -50,7 +50,7 @@ class mg3692c_driver(object):
             raise InvalidRangeError(msg)
         return
 
-    def query_power(self):
+    def get_power(self):
         self.com.open()
         self.com.send('POW?')
         ret = self.com.readline()
@@ -69,7 +69,7 @@ class mg3692c_driver(object):
             self.com.close()
         return
 
-    def query_output(self):
+    def get_output(self):
         self.com.open()
         self.com.send('OUTP?')
         ret = self.com.readline()
