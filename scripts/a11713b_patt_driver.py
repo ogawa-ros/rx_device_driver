@@ -108,6 +108,7 @@ class a11713b_controller(object):
     def callback(self, q, ch):
         level = q.data
         self.driver.set_level(level=level, ch=ch)
+        time.sleep(1.)
         current = self.driver.query_level()[self.ch_list.index(ch)]
         self.pub_list[self.ch_list.index(ch)].publish(current)
         return
