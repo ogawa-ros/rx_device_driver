@@ -113,6 +113,7 @@ class a11713b_controller(object):
         level = q.data
         self.driver.set_level(level=level, ch=ch)
         current = self.driver.query_level()[self.ch_list.index(ch)]
+        time.sleep(1.)
         self.pub_list[self.ch_list.index(ch)].publish(current)
         return
 
