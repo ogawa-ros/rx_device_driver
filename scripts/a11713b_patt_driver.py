@@ -91,7 +91,7 @@ class a11713b_controller(object):
             rospy.Publisher(
                 name = '{0}_{1}_{2}_level'.format(node_name, ch, self.driver_no),
                 data_class = Int32,
-                latch = True,
+                latch = False,
                 queue_size = 1
             )
             for ch in self.ch_list
