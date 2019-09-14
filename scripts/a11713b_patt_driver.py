@@ -25,11 +25,11 @@ class a11713b_driver(object):
 
         if connection == 'GPIB':
             self.com = pymeasure.gpib_prologix(self.IP, self.port)
-            time.sleep(0.5)
+            # time.sleep(0.5)
 
         elif connection == 'LAN':
             self.com = pymeasure.ethernet(self.IP, self.port)
-            time.sleep(0.5)
+            # time.sleep(0.5)
         return
 
     def set_level(self, level, ch):
@@ -41,13 +41,13 @@ class a11713b_driver(object):
             if ch == '1X':
                 self.com.open()
                 self.com.send('ATTenuator:BANK1:X {}'.format(level))
-                time.sleep(0.5)
+                # time.sleep(0.5)
                 self.com.close()
 
             elif ch == '1Y':
                 self.com.open()
                 self.com.send('ATTenuator:BANK1:Y {}'.format(level))
-                time.sleep(0.5)
+                # time.sleep(0.5)
                 self.com.close()
 
         # self.com.close()
@@ -59,15 +59,15 @@ class a11713b_driver(object):
 
     def query_level(self):
         self.com.open()
-        time.sleep(0.5)
+        # time.sleep(0.5)
         self.com.send('ATTenuator:BANK1:X?')
-        time.sleep(0.5)
+        # time.sleep(0.5)
         ret1 = self.com.readline()
-        time.sleep(0.5)
+        # time.sleep(0.5)
         self.com.send('ATTenuator:BANK1:Y?')
-        time.sleep(0.5)
+        # time.sleep(0.5)
         ret2 = self.com.readline()
-        time.sleep(0.5)
+        # time.sleep(0.5)
         self.com.close()
         att1X = int(ret1)
         att1Y = int(ret2)
