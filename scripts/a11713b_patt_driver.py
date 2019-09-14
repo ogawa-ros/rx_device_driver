@@ -69,7 +69,7 @@ class a11713b_driver(object):
             ret = self.com.readline()
             # time.sleep(0.5)
 
-        return ret
+        return int(ret)
 
 
 class a11713b_controller(object):
