@@ -99,7 +99,7 @@ class a11713b_controller(object):
                 data_class = Int32,
                 callback = self.callback,
                 callback_args = ch,
-                queue_size = 1
+                # queue_size = 1
             )
             for ch in self.ch_list
         ]
