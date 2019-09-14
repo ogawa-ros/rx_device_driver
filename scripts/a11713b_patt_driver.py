@@ -55,21 +55,21 @@ class a11713b_driver(object):
             raise InvalidValueError(msg)
         return
 
-    def query_level(self):
-        # time.sleep(0.5)
-        self.com.send('ATTenuator:BANK1:X?')
-        # time.sleep(0.5)
-        ret1 = self.com.readline()
-        # time.sleep(0.5)
-        self.com.send('ATTenuator:BANK1:Y?')
-        # time.sleep(0.5)
-        ret2 = self.com.readline()
-        # time.sleep(0.5)
-        att1X = int(ret1)
-        att1Y = int(ret2)
-        level = [att1X, att1Y]
+    def query_level(self, ch):
+        if ch == '1X':
+            # time.sleep(0.5)
+            self.com.send('ATTenuator:BANK1:X?')
+            # time.sleep(0.5)
+            ret = self.com.readline()
+            # time.sleep(0.5)
 
-        return level
+        elif ch == '1Y':
+            self.com.send('ATTenuator:BANK1:Y?')
+            # time.sleep(0.5)
+            ret = self.com.readline()
+            # time.sleep(0.5)
+
+        return ret
 
 
 class a11713b_controller(object):
@@ -109,7 +109,8 @@ class a11713b_controller(object):
         level = q.data
         self.driver.set_level(level=level, ch=ch)
         time.sleep(1.)
-        current = self.driver.query_level()[self.ch_list.index(ch)]
+        # current = self.driver.query_level()[self.ch_list.index(ch)]
+        # current = self.driver.query_level(ch=ch)
         self.pub_list[self.ch_list.index(ch)].publish(current)
         return
 
