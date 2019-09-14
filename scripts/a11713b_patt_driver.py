@@ -59,6 +59,7 @@ class a11713b_driver(object):
 
     def query_level(self):
         self.com.open()
+        time.sleep(0.5)
         self.com.send('ATTenuator:BANK1:X?')
         time.sleep(0.5)
         ret1 = self.com.readline()
