@@ -23,10 +23,10 @@ class lakeshore218_driver(object):
         ret = raw.strip().split(',')
         self.com.close()
         temperature = list(map(float, ret))
-        
+
         return temperature
 
-    
+
 def str2list(param):
     return param.strip('[').strip(']').split(',')
 
@@ -56,7 +56,10 @@ if __name__ == '__main__':
 
     while not rospy.is_shutdown():
 
-        ret = temp.measure()
+        try:
+            ret = temp.measure()
+        except: pass
+
         for pub, onoff, idx in zip(pub_list, onoff_list, range(8)):
             msg = Float64()
             if onoff == 1:
