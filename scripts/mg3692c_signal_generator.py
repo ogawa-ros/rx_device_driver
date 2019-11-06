@@ -10,6 +10,9 @@ import time
 import pymeasure
 
 
+node_name = 'mg3692c'
+
+
 class InvalidRangeError(Exception):
     pass
 
@@ -82,7 +85,7 @@ class mg3692c_controller(object):
     def __init__(self):
         host = rospy.get_param('~host')
         port = rospy.get_param('~port')
-        node_name = rospy.get_param('~node_name')
+        # node_name = rospy.get_param('~node_name')
         self.sg = mg3692c_driver(host, port)
 
         self.pub_freq = rospy.Publisher(
