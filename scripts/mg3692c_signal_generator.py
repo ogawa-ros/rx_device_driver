@@ -10,7 +10,7 @@ import time
 import pymeasure
 
 
-# node_name = 'mg3692c'
+node_name = 'mg3692c'
 
 
 class InvalidRangeError(Exception):
@@ -83,45 +83,44 @@ class mg3692c_driver(object):
 class mg3692c_controller(object):
 
     def __init__(self):
-        node_name = rospy.get_param('~node_name')
-        rospy.init_node(node_name)
         host = rospy.get_param('~host')
         port = rospy.get_param('~port')
+        name = rospy.get_param('~node_name')
         self.sg = mg3692c_driver(host, port)
 
         self.pub_freq = rospy.Publisher(
-            name = '{}_freq'.format(node_name),
+            name = '{}_freq'.format(name),
             data_class = Float64,
             latch = True,
             queue_size = 1
             )
         self.pub_power = rospy.Publisher(
-            name = '{}_power'.format(node_name),
+            name = '{}_power'.format(name),
             data_class = Float64,
             latch = True,
             queue_size = 1
             )
         self.pub_freq = rospy.Publisher(
-            name = '{}_onoff'.format(node_name),
+            name = '{}_onoff'.format(name),
             data_class = Int32,
             latch = True,
             queue_size = 1
             )
 
         self.sub_freq = rospy.Subscriber(
-            name = '{}_freq_cmd'.format(node_name),
+            name = '{}_freq_cmd'.format(name),
             data_class = Float64,
             callback = self.callback_freq,
             queue_size = 1
             )
         self.sub_power = rospy.Subscriber(
-            name = '{}_power_cmd'.format(node_name),
+            name = '{}_power_cmd'.format(name),
             data_class = Float64,
             callback = self.callback_power,
             queue_size = 1
             )
         self.sub_onoff = rospy.Subscriber(
-            name = '{}_onoff_cmd'.format(node_name),
+            name = '{}_onoff_cmd'.format(name),
             data_class = Int32,
             callback = self.callback_onoff,
             queue_size = 1
@@ -153,6 +152,6 @@ class mg3692c_controller(object):
 
 
 if __name__ == '__main__':
-    # rospy.init_node(node_name)
+    rospy.init_node(node_name)
     mg3692c_controller()
     rospy.spin()
