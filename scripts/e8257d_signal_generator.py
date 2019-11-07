@@ -84,6 +84,7 @@ class e8257d_controller(object):
         host = rospy.get_param('~host')
         port = rospy.get_param('~port')
         node_name = rospy.get_param('~node_name')
+        rospy.init_node(node_name)
         self.sg = e8257d_driver(host, port)
 
         self.pub_freq = rospy.Publisher(
@@ -150,6 +151,6 @@ class e8257d_controller(object):
 
 
 if __name__ == '__main__':
-    rospy.init_node(node_name)
+    # rospy.init_node(node_name)
     e8257d_controller()
     rospy.spin()

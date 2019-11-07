@@ -86,6 +86,7 @@ class mg3692c_controller(object):
         host = rospy.get_param('~host')
         port = rospy.get_param('~port')
         node_name = rospy.get_param('~node_name')
+        rospy.init_node(node_name)
         self.sg = mg3692c_driver(host, port)
 
         self.pub_freq = rospy.Publisher(
@@ -152,6 +153,6 @@ class mg3692c_controller(object):
 
 
 if __name__ == '__main__':
-    rospy.init_node(node_name)
+    # rospy.init_node(node_name)
     mg3692c_controller()
     rospy.spin()
