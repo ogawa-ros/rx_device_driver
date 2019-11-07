@@ -60,7 +60,7 @@ class mg3692c_driver(object):
 
         return power
 
-    def set_output(self, onoff=0):
+    def set_onoff(self, onoff=0):
         self.com.open()
         if onoff==1:
             self.com.send('OUTP ON')
@@ -70,7 +70,7 @@ class mg3692c_driver(object):
             self.com.close()
         return
 
-    def get_output(self):
+    def get_onoff(self):
         self.com.open()
         self.com.send('OUTP?')
         ret = self.com.readline()
