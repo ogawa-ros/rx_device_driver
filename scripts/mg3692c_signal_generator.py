@@ -22,8 +22,7 @@ class mg3692c_driver(object):
     def __init__(self, IP='', GPIB=1):
         self.IP = IP
         self.GPIB = GPIB
-        # self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
-        self.com = pymeasure.ethernet(self.IP, self.GPIB)
+        self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
 
     def set_freq(self, freq, unit='GHz'):
         self.com.open()
@@ -129,7 +128,7 @@ class mg3692c_controller(object):
     def callback_freq(self, q):
         target = q.data
         self.sg.set_freq(target)
-        time.sleep(3.)
+        time.sleep(1.)
         current = self.sg.get_freq()
         self.pub_freq.publish(current)
         return
@@ -137,7 +136,7 @@ class mg3692c_controller(object):
     def callback_power(self, q):
         target = q.data
         self.sg.set_power(target)
-        time.sleep(3.)
+        time.sleep(1.)
         current = self.sg.get_power()
         self.pub_power.publish(current)
         return
@@ -145,7 +144,7 @@ class mg3692c_controller(object):
     def callback_onoff(self, q):
         target = q.data
         self.sg.set_onoff(target)
-        time.sleep(3.)
+        time.sleep(1.)
         current = self.sg.get_onoff()
         self.pub_onoff.publish(current)
         return
