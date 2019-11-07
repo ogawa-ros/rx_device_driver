@@ -19,10 +19,13 @@ class InvalidRangeError(Exception):
 
 class mg3692c_driver(object):
 
-    def __init__(self, IP='', GPIB=1):
+    def __init__(self, IP='', GPIB=1, connection='GPIB'):
         self.IP = IP
         self.GPIB = GPIB
-        self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
+        if connection == 'GPIB':
+            self.com = pymeasure.gpib_prologix(self.IP, self.GPIB)
+        elif connection == 'LAN':
+            self.com = pymeasure.ethernet(self.IP, self.GPIB)
 
     def set_freq(self, freq, unit='GHz'):
         self.com.open()
@@ -85,7 +88,8 @@ class mg3692c_controller(object):
         host = rospy.get_param('~host')
         port = rospy.get_param('~port')
         name = rospy.get_param('~node_name')
-        self.sg = mg3692c_driver(host, port)
+        connection = rospy.get_param('~connection')
+        self.sg = mg3692c_driver(host, port, connection)
 
         self.pub_freq = rospy.Publisher(
             name = '{}_freq'.format(name),
