@@ -81,10 +81,10 @@ class e8257d_driver(object):
 class e8257d_controller(object):
 
     def __init__(self):
-        host = rospy.get_param('~host')
-        port = rospy.get_param('~port')
         node_name = rospy.get_param('~node_name')
         rospy.init_node(node_name)
+        host = rospy.get_param('~host')
+        port = rospy.get_param('~port')
         self.sg = e8257d_driver(host, port)
 
         self.pub_freq = rospy.Publisher(

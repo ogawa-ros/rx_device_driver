@@ -83,10 +83,10 @@ class mg3692c_driver(object):
 class mg3692c_controller(object):
 
     def __init__(self):
-        host = rospy.get_param('~host')
-        port = rospy.get_param('~port')
         node_name = rospy.get_param('~node_name')
         rospy.init_node(node_name)
+        host = rospy.get_param('~host')
+        port = rospy.get_param('~port')
         self.sg = mg3692c_driver(host, port)
 
         self.pub_freq = rospy.Publisher(
