@@ -99,7 +99,7 @@ class mg3692c_controller(object):
             latch = True,
             queue_size = 1
             )
-        self.pub_freq = rospy.Publisher(
+        self.pub_onoff = rospy.Publisher(
             name = '{}_onoff'.format(name),
             data_class = Int32,
             latch = True,
