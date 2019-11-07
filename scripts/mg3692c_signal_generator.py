@@ -126,7 +126,7 @@ class mg3692c_controller(object):
             )
 
     def callback_freq(self, q):
-        target = q.data
+        target = float(q.data)
         self.sg.set_freq(target)
         time.sleep(1.)
         current = self.sg.get_freq()
@@ -134,7 +134,7 @@ class mg3692c_controller(object):
         return
 
     def callback_power(self, q):
-        target = q.data
+        target = float(q.data)
         self.sg.set_power(target)
         time.sleep(1.)
         current = self.sg.get_power()
@@ -142,7 +142,7 @@ class mg3692c_controller(object):
         return
 
     def callback_onoff(self, q):
-        target = q.data
+        target = int(q.data)
         self.sg.set_onoff(target)
         time.sleep(1.)
         current = self.sg.get_onoff()
