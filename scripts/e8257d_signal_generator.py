@@ -7,6 +7,7 @@ from std_msgs.msg import Float64
 
 import sys
 import time
+import threading
 import pymeasure
 
 
@@ -148,8 +149,24 @@ class e8257d_controller(object):
         self.pub_onoff.publish(current)
         return
 
+    def monitor(self):
+        while True:
+            freq = self.sg.get_freq()
+            power = self.sg.get_power()
+            onoff = self.sg.get_onoff()
+            self.pub_freq.publish(freq)
+            self.pub_power.publish(power)
+            self.pub_onoff.publish(onoff)
+            time.sleep(5.)
+
+    def start_thread(self):
+        th = threading.Thread(target=self.monitor)
+        th.setDaemon(True)
+        th.start()
+
 
 if __name__ == '__main__':
     rospy.init_node(node_name)
-    e8257d_controller()
+    sg = e8257d_controller()
+    sg.start_thread()
     rospy.spin()
