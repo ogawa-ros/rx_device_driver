@@ -139,7 +139,7 @@ class e8257d_controller(object):
         target = q.data
 
         if target != 0 :
-            self.sg.set_freq(target)
+            self.sg.set_power(target)
             time.sleep(2.)
 
         current = self.sg.get_power()
@@ -150,7 +150,7 @@ class e8257d_controller(object):
         target = q.data
 
         if target not in [0, 1] :
-            self.sg.set_freq(target)
+            self.sg.set_onoff(target)
             time.sleep(2.)
 
         current = self.sg.get_onoff()
