@@ -138,7 +138,7 @@ class e8257d_controller(object):
     def callback_onoff(self, q):
         target = q.data
 
-        if target not in [0, 1]:
+        if target in [0, 1]:
             self.sg.set_onoff(target)
             time.sleep(2.0)
 
